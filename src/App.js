@@ -1,5 +1,4 @@
 import { Switch, Route } from 'react-router-dom';
-import { Button, ButtonToolbar } from 'rsuite';
 import './App.css';
 
 import routes from './Routes';
