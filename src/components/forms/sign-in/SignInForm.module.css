@@ -5,3 +5,7 @@
 .SigninForm {
   text-align: left;
 }
+
+.HelpBlockRed {
+  color: red !important;
+}

@@ -5,3 +5,7 @@
 .RegisterForm {
   text-align: left;
 }
+
+.HelpBlockRed {
+  color: red !important;
+}

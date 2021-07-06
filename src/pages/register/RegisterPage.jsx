@@ -9,7 +9,6 @@ function RegisterPage() {
       <NavLink to="/sign-in">Sign In</NavLink>
     </div>
   );
-  // TODO
 }
 
 export default RegisterPage;
