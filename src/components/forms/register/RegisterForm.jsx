@@ -6,6 +6,8 @@ import {
   FormControl,
   Button,
   HelpBlock,
+  DatePicker,
+  Alert,
 } from 'rsuite';
 import { AUTHORIZATION } from '../../../services/api';
 import styles from './RegisterForm.module.css';
@@ -19,7 +21,9 @@ function RegisterForm() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(AUTHORIZATION.Register(data.username, data.password));
+    const result = AUTHORIZATION.Register(data);
+    if (result.success) Alert.success(result.details, 5000);
+    else Alert.error(result.details, 5000);
   };
 
   return (
@@ -75,6 +79,32 @@ function RegisterForm() {
           errors.ConfirmPassword.type === 'required' && (
             <HelpBlock className={styles.HelpBlockRed}>Required</HelpBlock>
           )}
+      </FormGroup>
+      <FormGroup>
+        <ControlLabel>Name</ControlLabel>
+        <Controller
+          name="name"
+          control={control}
+          rules={{ required: true }}
+          defaultValue=""
+          render={({ field }) => <FormControl type="text" {...field} />}
+        />
+        {errors.name && errors.name.type === 'required' && (
+          <HelpBlock className={styles.HelpBlockRed}>Required</HelpBlock>
+        )}
+      </FormGroup>
+      <FormGroup>
+        <ControlLabel>Birth Date</ControlLabel>
+        <Controller
+          name="birthdate"
+          control={control}
+          rules={{ required: true }}
+          // defaultValue=""
+          render={({ field }) => <DatePicker {...field} block oneTap />}
+        />
+        {errors.birthdate && errors.birthdate.type === 'required' && (
+          <HelpBlock className={styles.HelpBlockRed}>Required</HelpBlock>
+        )}
       </FormGroup>
       <Button
         appearance="primary"

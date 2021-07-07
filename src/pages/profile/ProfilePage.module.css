@@ -1,0 +1,10 @@
+.ProfilePanelWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.ProfilePanel {
+  margin-top: 7em;
+  width: 70%;
+}
