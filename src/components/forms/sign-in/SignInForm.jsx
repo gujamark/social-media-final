@@ -38,7 +38,7 @@ function SignInForm() {
         }),
       );
       Alert.success('Authenticated successfully');
-      history.replace(routePaths.FEED_PATH);
+      history.replace(routePaths.POSTS_PATH);
     } else {
       console.log(result.message);
       Alert.warning(result.message, 5000);

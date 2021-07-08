@@ -6,5 +6,5 @@ export const routePaths = {
   SIGN_IN_PATH: '/signin',
   REGISTER_PATH: '/register',
   PROFILE_PATH: '/profile',
-  FEED_PATH: '/feed',
+  POSTS_PATH: '/posts',
 };

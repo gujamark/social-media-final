@@ -1,7 +1,7 @@
 import RegisterPage from './pages/register';
 import SignInPage from './pages/sign-in';
 import ProfilePage from './pages/profile';
-
+import PostsPage from './pages/posts';
 import { routePaths } from './utils/constants';
 
 export const routes = [
@@ -25,8 +25,8 @@ export const routes = [
   },
   {
     title: 'Feed',
-    path: routePaths.FEED_PATH,
-    component: <h1>Feeeed</h1>,
+    path: routePaths.POSTS_PATH,
+    component: PostsPage,
     showInNav: true,
   },
 ];

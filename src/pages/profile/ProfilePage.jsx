@@ -1,6 +1,7 @@
 import { Panel } from 'rsuite';
 import ProfileEditForm from '../../components/forms/profile-edit/ProfileEditForm';
 import styles from './ProfilePage.module.css';
+import { AuthProtected } from '../../hocs';
 
 function ProfilePage() {
   return (
@@ -14,4 +15,5 @@ function ProfilePage() {
     </div>
   );
 }
-export default ProfilePage;
+
+export default AuthProtected(ProfilePage);
