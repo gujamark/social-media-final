@@ -36,6 +36,7 @@
     "arrow-spacing": "off",
     "react/state-in-constructor": "off",
     "no-undef": "off",
+    "max-classes-per-file": ["error", 2],
     "react/jsx-filename-extension": [
       1,
       {

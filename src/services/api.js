@@ -1,9 +1,22 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export class AUTHORIZATION {
   static SignIn({ username, password }) {
+    const result = {};
     const users = JSON.parse(localStorage.getItem('users'));
     const UserObj = users.find((user) => user.username === username);
-
-    return UserObj.password === password;
+    if (!UserObj) {
+      result.success = false;
+      result.details = 'Username or Password is incorrect';
+      return result;
+    }
+    result.success = UserObj.password === password;
+    if (result.success) {
+      result.auth_token = uuidv4();
+      result.user_data = UserObj;
+    }
+    if (!result.success) result.details = 'Username or Password is incorrect';
+    return result;
   }
 
   static Register({ username, password, name, birthdate }) {
@@ -29,4 +42,15 @@ export class AUTHORIZATION {
 
     return result;
   }
+
+  static getUserData(username) {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const userData = users.find((user) => username === user.username);
+
+    return userData;
+  }
+}
+
+export class Feed {
+  static getPosts() {}
 }

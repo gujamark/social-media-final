@@ -5,12 +5,18 @@ import {
   FormControl,
   Button,
   HelpBlock,
+  Alert,
 } from 'rsuite';
 import { useForm, Controller } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { AUTHORIZATION } from '../../../services/api';
 import styles from './SignInForm.module.css';
+import { setAuthUserAction } from '../../../redux/actions';
+import { AUTH_TOKEN, AUTH_USERNAME } from '../../../utils/constants';
 
 function SignInForm() {
+  const dispatch = useDispatch();
+
   const {
     control,
     handleSubmit,
@@ -18,7 +24,19 @@ function SignInForm() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(AUTHORIZATION.SignIn(data.username, data.password));
+    const result = AUTHORIZATION.SignIn(data);
+    if (result.success) {
+      localStorage.setItem(AUTH_TOKEN, result.auth_token);
+      localStorage.setItem(AUTH_USERNAME, result.user_data.username);
+      dispatch(
+        setAuthUserAction({
+          isAuthenticated: result.success,
+          userData: result.user_data,
+        }),
+      );
+    } else {
+      Alert.warning(result.details, 5000);
+    }
   };
 
   return (

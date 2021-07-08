@@ -1,13 +1,12 @@
 import { Switch, Route } from 'react-router-dom';
-import './App.css';
-
-import routes from './Routes';
-
+import { routes } from './Routes';
 import 'rsuite/dist/styles/rsuite-dark.css';
+import Navigation from './components/navigation';
 
 function App() {
   return (
-    <div className="App">
+    <div>
+      <Navigation />
       <Switch>
         {routes.map((route) => (
           <Route exact path={route.path} key={route.path}>

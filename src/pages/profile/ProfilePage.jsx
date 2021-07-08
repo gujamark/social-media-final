@@ -1,6 +1,6 @@
 import { Panel } from 'rsuite';
+import ProfileEditForm from '../../components/forms/profile-edit/ProfileEditForm';
 import styles from './ProfilePage.module.css';
-import RegisterForm from '../../components/forms/register';
 
 function ProfilePage() {
   return (
@@ -9,7 +9,7 @@ function ProfilePage() {
         header="Guja Markozashvili"
         className={styles.ProfilePanel}
         bordered>
-        <RegisterForm />
+        <ProfileEditForm />
       </Panel>
     </div>
   );
