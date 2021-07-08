@@ -22,14 +22,16 @@ function Navigation() {
             </Nav.Item>
           ))}
         </Nav>
-        <Nav pullRight>
-          <Nav.Item
-            icon={<Icon icon="user" />}
-            componentClass={NavLink}
-            to="/profile">
-            {authData.userData.name}
-          </Nav.Item>
-        </Nav>
+        {authData.isAuthenticated && (
+          <Nav pullRight>
+            <Nav.Item
+              icon={<Icon icon="user" />}
+              componentClass={NavLink}
+              to="/profile">
+              {authData.userData.email}
+            </Nav.Item>
+          </Nav>
+        )}
       </Navbar>
     </>
   );

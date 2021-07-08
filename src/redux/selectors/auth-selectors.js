@@ -1,4 +1,3 @@
-export const authSelector = ({ auth: { isAuthenticated, userData } }) => ({
-  isAuthenticated,
-  userData,
+export const authSelector = ({ auth }) => ({
+  ...auth,
 });

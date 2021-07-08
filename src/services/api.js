@@ -1,44 +1,54 @@
-import { v4 as uuidv4 } from 'uuid';
+import { auth } from '../firebase/firebase';
 
 export class AUTHORIZATION {
-  static SignIn({ username, password }) {
+  static async SignIn({ email, password }) {
+    // const result = {};
+    // const users = JSON.parse(localStorage.getItem('users'));
+    // const UserObj = users.find((user) => user.username === username);
+    // if (!UserObj) {
+    //   result.success = false;
+    //   result.details = 'Username or Password is incorrect';
+    //   return result;
+    // }
+    // result.success = UserObj.password === password;
+    // if (result.success) {
+    //   result.auth_token = uuidv4();
+    //   result.user_data = UserObj;
+    // }
+    // if (!result.success) result.details = 'Username or Password is incorrect';
+    // return result;
+
     const result = {};
-    const users = JSON.parse(localStorage.getItem('users'));
-    const UserObj = users.find((user) => user.username === username);
-    if (!UserObj) {
-      result.success = false;
-      result.details = 'Username or Password is incorrect';
-      return result;
-    }
-    result.success = UserObj.password === password;
-    if (result.success) {
-      result.auth_token = uuidv4();
-      result.user_data = UserObj;
-    }
-    if (!result.success) result.details = 'Username or Password is incorrect';
+
+    await auth
+      .signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        result.data = response.user;
+        result.success = true;
+      })
+      .catch((error) => {
+        console.log(error.message);
+        result.success = false;
+        result.message = error.message;
+        result.data = {};
+      });
+
     return result;
   }
 
-  static Register({ username, password, name, birthdate }) {
+  static async Register({ email, password }) {
     const result = {};
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const alreadytExists = users.find((user) => username === user.username);
-
-    if (alreadytExists) {
-      result.success = false;
-      result.details = 'Account with this username already exists';
-      return result;
-    }
-
-    users.push({
-      username: username,
-      password: password,
-      name: name,
-      birthdate: birthdate,
-    });
-    localStorage.setItem('users', JSON.stringify(users));
-    result.success = true;
-    result.details = 'User Registered successfuly';
+    await auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((response) => {
+        console.log(response);
+        result.data = response.user;
+        result.success = true;
+      })
+      .catch((error) => {
+        result.success = false;
+        result.message = error.message;
+      });
 
     return result;
   }
@@ -51,6 +61,6 @@ export class AUTHORIZATION {
   }
 }
 
-export class Feed {
-  static getPosts() {}
+export class POSTS {
+  static createPost(postData) {}
 }

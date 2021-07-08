@@ -1,4 +1,6 @@
 import { useForm, Controller } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Form,
   ControlLabel,
@@ -9,10 +11,15 @@ import {
   DatePicker,
   Alert,
 } from 'rsuite';
+import { setAuthUserAction } from '../../../redux/actions';
+import { AUTH_TOKEN, USER_DATA, routePaths } from '../../../utils/constants';
 import { AUTHORIZATION } from '../../../services/api';
 import styles from './RegisterForm.module.css';
 
 function RegisterForm() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const {
     control,
     handleSubmit,
@@ -20,10 +27,22 @@ function RegisterForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    const result = AUTHORIZATION.Register(data);
-    if (result.success) Alert.success(result.details, 5000);
-    else Alert.error(result.details, 5000);
+  const onSubmit = async (data) => {
+    const result = await AUTHORIZATION.Register(data);
+    if (result.success) {
+      Alert.success('Registered Successfully', 5000);
+      localStorage.setItem(AUTH_TOKEN, result.data.uid);
+      localStorage.setItem(USER_DATA, JSON.stringify(result.data));
+      dispatch(
+        setAuthUserAction({
+          isAuthenticated: result.success,
+          userData: result.data,
+        }),
+      );
+      history.replace(routePaths.FEED_PATH);
+    } else {
+      Alert.error(result.message, 5000);
+    }
   };
 
   return (
@@ -31,13 +50,13 @@ function RegisterForm() {
       <FormGroup>
         <ControlLabel>Username</ControlLabel>
         <Controller
-          name="username"
+          name="email"
           control={control}
-          defaultValue="guja"
+          defaultValue=""
           rules={{ required: true }}
-          render={({ field }) => <FormControl type="text" {...field} />}
+          render={({ field }) => <FormControl type="email" {...field} />}
         />
-        {errors.username && errors.username.type === 'required' && (
+        {errors.email && errors.email.type === 'required' && (
           <HelpBlock className={styles.HelpBlockRed}>Required</HelpBlock>
         )}
       </FormGroup>
@@ -80,32 +99,7 @@ function RegisterForm() {
             <HelpBlock className={styles.HelpBlockRed}>Required</HelpBlock>
           )}
       </FormGroup>
-      <FormGroup>
-        <ControlLabel>Name</ControlLabel>
-        <Controller
-          name="name"
-          control={control}
-          rules={{ required: true }}
-          defaultValue=""
-          render={({ field }) => <FormControl type="text" {...field} />}
-        />
-        {errors.name && errors.name.type === 'required' && (
-          <HelpBlock className={styles.HelpBlockRed}>Required</HelpBlock>
-        )}
-      </FormGroup>
-      <FormGroup>
-        <ControlLabel>Birth Date</ControlLabel>
-        <Controller
-          name="birthdate"
-          control={control}
-          rules={{ required: true }}
-          // defaultValue=""
-          render={({ field }) => <DatePicker {...field} block oneTap />}
-        />
-        {errors.birthdate && errors.birthdate.type === 'required' && (
-          <HelpBlock className={styles.HelpBlockRed}>Required</HelpBlock>
-        )}
-      </FormGroup>
+
       <Button
         appearance="primary"
         type="submit"

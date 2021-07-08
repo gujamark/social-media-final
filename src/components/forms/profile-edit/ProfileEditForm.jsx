@@ -4,17 +4,14 @@ import {
   ControlLabel,
   FormGroup,
   FormControl,
-  Button,
   HelpBlock,
   DatePicker,
-  Alert,
 } from 'rsuite';
 
 function ProfileEditForm() {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 

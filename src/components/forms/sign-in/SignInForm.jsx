@@ -9,13 +9,15 @@ import {
 } from 'rsuite';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { AUTHORIZATION } from '../../../services/api';
 import styles from './SignInForm.module.css';
 import { setAuthUserAction } from '../../../redux/actions';
-import { AUTH_TOKEN, AUTH_USERNAME } from '../../../utils/constants';
+import { AUTH_TOKEN, USER_DATA, routePaths } from '../../../utils/constants';
 
 function SignInForm() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const {
     control,
@@ -23,19 +25,23 @@ function SignInForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    const result = AUTHORIZATION.SignIn(data);
+  const onSubmit = async (data) => {
+    const result = await AUTHORIZATION.SignIn(data);
+    console.log(result);
     if (result.success) {
-      localStorage.setItem(AUTH_TOKEN, result.auth_token);
-      localStorage.setItem(AUTH_USERNAME, result.user_data.username);
+      localStorage.setItem(AUTH_TOKEN, result.data.uid);
+      localStorage.setItem(USER_DATA, JSON.stringify(result.data));
       dispatch(
         setAuthUserAction({
           isAuthenticated: result.success,
-          userData: result.user_data,
+          userData: result.data,
         }),
       );
+      Alert.success('Authenticated successfully');
+      history.replace(routePaths.FEED_PATH);
     } else {
-      Alert.warning(result.details, 5000);
+      console.log(result.message);
+      Alert.warning(result.message, 5000);
     }
   };
 
@@ -44,13 +50,13 @@ function SignInForm() {
       <FormGroup>
         <ControlLabel>Username</ControlLabel>
         <Controller
-          name="username"
+          name="email"
           control={control}
           defaultValue="guja"
           rules={{ required: true }}
-          render={({ field }) => <FormControl type="text" {...field} />}
+          render={({ field }) => <FormControl type="email" {...field} />}
         />
-        {errors.username && errors.username.type === 'required' && (
+        {errors.email && errors.email.type === 'required' && (
           <HelpBlock className={styles.HelpBlockRed}>Required</HelpBlock>
         )}
       </FormGroup>
