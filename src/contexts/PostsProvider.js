@@ -1,28 +1,40 @@
 import React, { useEffect, useState } from 'react';
+import { POSTS } from '../services/api';
 
 export const PostsContext = React.createContext();
 
 function PostsProviderComponent({ children }) {
-  const [page, setPage] = useState(0);
+  const [lastDoc, setLastDoc] = useState();
   const [posts, setPosts] = useState([]);
+  const [totalCount, setTotalCount] = useState();
 
-  const loadPosts = async (newPage) => {
-    const postsData = [];
-    for (let i = newPage * 15; i < (newPage + 1) * 15; i += 1)
-      postsData.push({ id: i, title: `rame ${i}` });
-    setPosts([...posts, ...postsData]);
+  const loadPosts = async () => {
+    const response = await POSTS.getPosts(lastDoc);
+    setPosts([...posts, ...response.data]);
+    setLastDoc(response.lastDoc);
+    setTotalCount(response.total_count);
   };
 
   const updatePage = () => {
-    setPage(page + 1);
+    loadPosts();
+  };
+
+  const deletePost = async (postid) => {
+    await POSTS.deletePost(postid);
+    const response = await POSTS.getPosts();
+    console.log([...response.data]);
+    setPosts([...response.data]);
+    setLastDoc(response.lastDoc);
+    setTotalCount(response.total_count);
   };
 
   useEffect(() => {
-    loadPosts(page);
-  }, [page]);
+    loadPosts();
+  }, []);
 
   return (
-    <PostsContext.Provider value={{ posts, updatePage }}>
+    <PostsContext.Provider
+      value={{ posts, updatePage, deletePost, totalCount }}>
       {children}
     </PostsContext.Provider>
   );

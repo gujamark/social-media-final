@@ -8,7 +8,6 @@ import {
   FormControl,
   Button,
   HelpBlock,
-  DatePicker,
   Alert,
 } from 'rsuite';
 import { setAuthUserAction } from '../../../redux/actions';
@@ -39,7 +38,7 @@ function RegisterForm() {
           userData: result.data,
         }),
       );
-      history.replace(routePaths.FEED_PATH);
+      history.replace(routePaths.POSTS_PATH);
     } else {
       Alert.error(result.message, 5000);
     }
@@ -48,7 +47,7 @@ function RegisterForm() {
   return (
     <Form className={styles.RegisterForm} onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
-        <ControlLabel>Username</ControlLabel>
+        <ControlLabel>Email</ControlLabel>
         <Controller
           name="email"
           control={control}
@@ -65,7 +64,7 @@ function RegisterForm() {
         <Controller
           name="password"
           control={control}
-          defaultValue="guja"
+          defaultValue=""
           rules={{ required: true }}
           render={({ field }) => <FormControl type="password" {...field} />}
         />
@@ -78,7 +77,7 @@ function RegisterForm() {
         <Controller
           name="ConfirmPassword"
           control={control}
-          defaultValue="guja"
+          defaultValue=""
           rules={{
             validate: (value) =>
               value === watch('password') || 'passwords must be the same',

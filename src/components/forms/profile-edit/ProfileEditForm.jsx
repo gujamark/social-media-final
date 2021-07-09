@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Form,
@@ -6,18 +7,33 @@ import {
   FormControl,
   HelpBlock,
   DatePicker,
+  Button,
+  Alert,
 } from 'rsuite';
+import { AUTHORIZATION } from '../../../services/api';
+import { AUTH_TOKEN } from '../../../utils/constants';
 
 function ProfileEditForm() {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  useEffect(async () => {
+    const currentUser = localStorage.getItem(AUTH_TOKEN);
+    const result = await AUTHORIZATION.getUserData(currentUser);
+    reset(result.data);
+  }, []);
+
+  const onSubmit = async (data) => {
+    const result = await AUTHORIZATION.updateUser(data);
+
+    if (result.success) Alert.success('Updates Successfully');
+    else Alert.Error('Error occured');
   };
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
@@ -39,13 +55,16 @@ function ProfileEditForm() {
           name="birthdate"
           control={control}
           rules={{ required: true }}
-          // defaultValue=""
+          defaultValue={new Date(Date.now())}
           render={({ field }) => <DatePicker {...field} oneTap />}
         />
         {errors.birthdate && errors.birthdate.type === 'required' && (
           <HelpBlock className={styles.HelpBlockRed}>Required</HelpBlock>
         )}
       </FormGroup>
+      <Button appearance="primary" type="submit">
+        Update
+      </Button>
     </Form>
   );
 }

@@ -6,10 +6,7 @@ import { AuthProtected } from '../../hocs';
 function ProfilePage() {
   return (
     <div className={styles.ProfilePanelWrapper}>
-      <Panel
-        header="Guja Markozashvili"
-        className={styles.ProfilePanel}
-        bordered>
+      <Panel className={styles.ProfilePanel} bordered>
         <ProfileEditForm />
       </Panel>
     </div>

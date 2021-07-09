@@ -6,3 +6,18 @@
 .TitleBlue {
   color: #2dadec;
 }
+
+.timestamp {
+  color: gray;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.PostItemHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.badgeBlue {
+  background-color: blue;
+}

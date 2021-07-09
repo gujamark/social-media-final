@@ -27,7 +27,7 @@ function SignInForm() {
 
   const onSubmit = async (data) => {
     const result = await AUTHORIZATION.SignIn(data);
-    console.log(result);
+
     if (result.success) {
       localStorage.setItem(AUTH_TOKEN, result.data.uid);
       localStorage.setItem(USER_DATA, JSON.stringify(result.data));
@@ -40,7 +40,6 @@ function SignInForm() {
       Alert.success('Authenticated successfully');
       history.replace(routePaths.POSTS_PATH);
     } else {
-      console.log(result.message);
       Alert.warning(result.message, 5000);
     }
   };
@@ -48,11 +47,11 @@ function SignInForm() {
   return (
     <Form className={styles.SigninForm} onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
-        <ControlLabel>Username</ControlLabel>
+        <ControlLabel>Email</ControlLabel>
         <Controller
           name="email"
           control={control}
-          defaultValue="guja"
+          defaultValue=""
           rules={{ required: true }}
           render={({ field }) => <FormControl type="email" {...field} />}
         />
@@ -65,7 +64,7 @@ function SignInForm() {
         <Controller
           name="password"
           control={control}
-          defaultValue="guja"
+          defaultValue=""
           rules={{ required: true }}
           render={({ field }) => <FormControl type="password" {...field} />}
         />

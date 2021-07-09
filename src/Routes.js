@@ -2,6 +2,7 @@ import RegisterPage from './pages/register';
 import SignInPage from './pages/sign-in';
 import ProfilePage from './pages/profile';
 import PostsPage from './pages/posts';
+import CreatePostPage from './pages/create-post';
 import { routePaths } from './utils/constants';
 
 export const routes = [
@@ -27,6 +28,12 @@ export const routes = [
     title: 'Feed',
     path: routePaths.POSTS_PATH,
     component: PostsPage,
+    showInNav: true,
+  },
+  {
+    title: 'Create Post',
+    path: routePaths.CREATE_POST_PATH,
+    component: CreatePostPage,
     showInNav: true,
   },
 ];

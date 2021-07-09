@@ -8,7 +8,6 @@ const initialState = {
 };
 
 export const authReducer = (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case actionType.SET_AUTH_USER:
       return {

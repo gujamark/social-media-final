@@ -1,15 +1,15 @@
 import { Redirect } from 'react-router';
 import { AUTH_TOKEN, routePaths } from '../utils/constants';
 
-export const AuthProtected = (Component) => {
-  const WithAuthProtected = (props) => {
+export const noAuthProtected = (Component) => {
+  const WithNoAuthProtected = (props) => {
     const token = localStorage.getItem(AUTH_TOKEN);
 
-    if (!token) {
-      return <Redirect to={routePaths.SIGN_IN_PATH} />;
+    if (token) {
+      return <Redirect to={routePaths.POSTS_PATH} />;
     }
     return <Component {...props} />;
   };
 
-  return WithAuthProtected;
+  return WithNoAuthProtected;
 };
