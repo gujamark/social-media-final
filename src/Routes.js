@@ -1,9 +1,11 @@
-import RegisterPage from './pages/register';
-import SignInPage from './pages/sign-in';
-import ProfilePage from './pages/profile';
-import PostsPage from './pages/posts';
-import CreatePostPage from './pages/create-post';
+import React from 'react';
 import { routePaths } from './utils/constants';
+
+const RegisterPage = React.lazy(() => import('./pages/register'));
+const SignInPage = React.lazy(() => import('./pages/sign-in'));
+const ProfilePage = React.lazy(() => import('./pages/profile'));
+const PostsPage = React.lazy(() => import('./pages/posts'));
+const CreatePostPage = React.lazy(() => import('./pages/create-post'));
 
 export const routes = [
   {
