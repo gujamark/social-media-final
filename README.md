@@ -1,13 +1,15 @@
+#### Project is deployed to https://brave-ardinghelli-5ad5f8.netlify.app/
+
 ## FIREBASE CONFIGURATION
 
 if you want to connect to you firebase project, create .env file and set following environment variables
 
-* `REACT_APP_FIREBASE_API_KEY`
-* `REACT_APP_FIREBASE_AUTH_DOMAIN`
-* `REACT_APP_FIREBASE_PROJECT_ID`
-* `REACT_APP_FIREBASE_STORAGE_BUCKET`
-* `REACT_APP_FIREBASE_MESSAGING_SENDER_ID`
-* `REACT_APP_FIREBASE_APP_ID`
+- `REACT_APP_FIREBASE_API_KEY`
+- `REACT_APP_FIREBASE_AUTH_DOMAIN`
+- `REACT_APP_FIREBASE_PROJECT_ID`
+- `REACT_APP_FIREBASE_STORAGE_BUCKET`
+- `REACT_APP_FIREBASE_MESSAGING_SENDER_ID`
+- `REACT_APP_FIREBASE_APP_ID`
 
 ## Available Scripts
 
