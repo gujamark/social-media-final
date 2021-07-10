@@ -1,4 +1,4 @@
-#### Project is deployed to https://brave-ardinghelli-5ad5f8.netlify.app/
+#### Project is deployed to https://social-media-final.netlify.app/
 
 ## FIREBASE CONFIGURATION
 
