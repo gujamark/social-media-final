@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/58f4cec1-2f07-4361-82fb-1cd8618a287d/deploy-status)](https://app.netlify.com/sites/social-media-final/deploys)
+
 #### Project is deployed to https://social-media-final.netlify.app/
 
 ## FIREBASE CONFIGURATION
